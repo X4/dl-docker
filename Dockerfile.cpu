@@ -10,7 +10,7 @@ ARG LASAGNE_VERSION=v0.1
 ARG FLOYDHUB_VERSION=0.8.1
 ARG TORCH_VERSION=latest
 ARG CAFFE_VERSION=master
-
+ 
 # Install some dependencies
 RUN apt-get update && apt-get install -y \
 		bc \
