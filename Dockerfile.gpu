@@ -1,12 +1,13 @@
 FROM nvidia/cuda:8.0-cudnn5-devel-ubuntu14.04
 
-MAINTAINER Sai Soundararaj <saip@outlook.com>
+MAINTAINER Ferhat <dockerhub@ferhat.name>
 
 ARG THEANO_VERSION=rel-0.8.2
-ARG TENSORFLOW_VERSION=0.12.1
+ARG TENSORFLOW_VERSION=1.0.1
 ARG TENSORFLOW_ARCH=gpu
-ARG KERAS_VERSION=1.2.0
+ARG KERAS_VERSION=2.0.0
 ARG LASAGNE_VERSION=v0.1
+ARG FLOYDHUB_VERSION=0.7
 ARG TORCH_VERSION=latest
 ARG CAFFE_VERSION=master
 
@@ -186,10 +187,16 @@ RUN pip --no-cache-dir install git+git://github.com/Theano/Theano.git@${THEANO_V
 # Install Keras
 RUN pip --no-cache-dir install git+git://github.com/fchollet/keras.git@${KERAS_VERSION}
 
-
 # Install Lasagne
 RUN pip --no-cache-dir install git+git://github.com/Lasagne/Lasagne.git@${LASAGNE_VERSION}
 
+# Install Floydhub
+RUN pip --no-cache-dir install git+git://github.com/floydhub/floyd-cli.git@${FLOYDHUB_VERSION} 
+
+# Clone Keras examples and initialize their Floydhub configuration
+RUN git clone https://github.com/fchollet/keras /root/keras_floydhub --recursive && \
+	cd /root/keras_floydhub/examples && \
+	floyd init keras-examples
 
 # Install Torch
 RUN git clone https://github.com/torch/distro.git /root/torch --recursive && \
