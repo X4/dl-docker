@@ -224,6 +224,11 @@ RUN git clone --depth 1 https://github.com/opencv/opencv.git /root/opencv && \
 	ldconfig && \
 	echo 'ln /dev/null /dev/raw1394' >> ~/.bashrc
 
+# Setup Spacy
+RUN pip --no-cache-dir install -U spacy
+RUN python -m spacy.en.download all
+RUN python -m spacy.de.download all
+
 
 # Set up notebook config
 COPY jupyter_notebook_config.py /root/.jupyter/
